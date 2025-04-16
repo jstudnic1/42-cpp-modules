@@ -16,3 +16,10 @@ Each module directory contains separate exercises. To compile an exercise, navig
 cd cpp00/ex00
 make
 ```
+
+## Changelog
+
+- a3bcdb5 Add cpp02/ex00: Fixed point number class (jstudnic1, 3 days ago)
+- 4ff53b5 Add cpp01 module project (jstudnic1, 3 days ago)
+- effea10 Add C++ module projects (00-02) (jstudnic1, 3 days ago)
+- 99a8427 Initial commit: Add .gitignore and README (jstudnic1, 3 days ago)

@@ -7,14 +7,14 @@ RED =	\033[31m
 NC =	\033[0m
 
 #name
-NAME =		fixed
+NAME =		claptrap
 
 #compilation
 CC =		c++
 CFLAGS = 	-Wall -Wextra -Werror -std=c++98
 
 #source files
-SRC = 		main.cpp Fixed.cpp
+SRC = 		main.cpp ClapTrap.cpp
 
 all: $(NAME)
 
