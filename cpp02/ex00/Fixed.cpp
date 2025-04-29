@@ -7,10 +7,9 @@ Fixed::Fixed(void) : _fixedPointValue(0)
 }
 
 // Copy constructor
-Fixed::Fixed(const Fixed &src)
+Fixed::Fixed(const Fixed &src) : _fixedPointValue(src._fixedPointValue)
 {
     std::cout << "Copy constructor called" << std::endl;
-    *this = src;
 }
 
 // Destructor
