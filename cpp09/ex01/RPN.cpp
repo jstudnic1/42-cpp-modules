@@ -19,7 +19,6 @@ RPN &RPN::operator=(const RPN &other) {
 RPN::~RPN() {}
 
 void RPN::run(const std::string &expression) {
-    (void)expression;
 	for (size_t i = 0; i < expression.length(); i++) {
 		if (expression[i] == ' ') continue;
 		if (expression[i] >= '0' && expression[i] <= '9') {

@@ -18,12 +18,8 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other) {
 
 BitcoinExchange::~BitcoinExchange() {}
 
-/* -------------------------------------------------------------------------- */
-/*                                CORE LOGIC                                 */
-/* -------------------------------------------------------------------------- */
-
 void BitcoinExchange::parseDatabase(const std::string &filename) {
-	std::ifstream file(filename);
+	std::ifstream file(filename.c_str());
 	if (!file.is_open()) {
 		std::cerr << "Error: could not open file." << std::endl;
 		return;
@@ -55,7 +51,7 @@ float BitcoinExchange::getExchangeRate(const std::string &date) {
 }
 
 void BitcoinExchange::run(const std::string &filename) {
-    std::ifstream file(filename);
+    std::ifstream file(filename.c_str());
     if (!file.is_open()) {
         std::cerr << "Error: could not open file.\n";
         return;
@@ -98,18 +94,26 @@ bool BitcoinExchange::isValidDate(const std::string &date) {
 	if (date.length() != 10) return false;
 	if (date[4] != '-' || date[7] != '-') return false;
 
+	// Validate that year, month, day portions are digits
+	for (size_t i = 0; i < 4; i++)
+		if (!std::isdigit(static_cast<unsigned char>(date[i]))) return false;
+	for (size_t i = 5; i < 7; i++)
+		if (!std::isdigit(static_cast<unsigned char>(date[i]))) return false;
+	for (size_t i = 8; i < 10; i++)
+		if (!std::isdigit(static_cast<unsigned char>(date[i]))) return false;
+
 	int year = std::atoi(date.substr(0, 4).c_str());
 	int month = std::atoi(date.substr(5, 2).c_str());
 	int day = std::atoi(date.substr(8, 2).c_str());
 
 	if (year < 0 || month < 1 || month > 12 || day < 1 || day > 31) return false;
 
-    if (month == 2) {
-        bool isLeap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
-        if (day > (isLeap ? 29 : 28)) return false;
-    } else if (month == 4 || month == 6 || month == 9 || month == 11) {
-        if (day > 30) return false;
-    }
+	if (month == 2) {
+		bool isLeap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+		if (day > (isLeap ? 29 : 28)) return false;
+	} else if (month == 4 || month == 6 || month == 9 || month == 11) {
+		if (day > 30) return false;
+	}
 
 	return true;
 }

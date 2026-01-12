@@ -31,13 +31,14 @@ void PmergeMe::run(int argc, char **argv) {
 
     // 1. Parsing
     for (int i = 1; i < argc; i++) {
-        long val = std::atol(argv[i]);
-        if (val <= 0 || val > INT_MAX) {
+        char *endptr;
+        long val = std::strtol(argv[i], &endptr, 10);
+        if (*endptr != '\0' || val <= 0 || val > INT_MAX) {
             std::cerr << "Error: invalid argument." << std::endl;
             return;
         }
-        _vec.push_back(val);
-        _deq.push_back(val);
+        _vec.push_back(static_cast<int>(val));
+        _deq.push_back(static_cast<int>(val));
     }
 
     // Print Before
@@ -128,12 +129,10 @@ void PmergeMe::mergeInsertionSortVector(std::vector<int> &v) {
         }
     }
 
-    // Insert first pending element
     if (!pending.empty()) {
         mainChain.insert(mainChain.begin(), pending[0]);
     }
 
-    // Insert remaining pending elements using Jacobsthal groups
     std::vector<int> jacobsthal_indices = generateJacobsthal(pending.size());
     size_t p_idx = 1;
     size_t j_idx = 2;
@@ -151,7 +150,6 @@ void PmergeMe::mergeInsertionSortVector(std::vector<int> &v) {
         j_idx++;
     }
 
-    // Insert straggler
     if (hasStraggler) {
         binarySearchInsertionVector(mainChain, straggler);
     }

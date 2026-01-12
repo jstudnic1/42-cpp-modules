@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
+#include <cctype>
 
 class BitcoinExchange {
 public:
